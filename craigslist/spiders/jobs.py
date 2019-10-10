@@ -26,11 +26,15 @@ class JobsSpider(scrapy.Spider):
         time = response.meta.get('time')
 
         description = "".join(line for line in response.xpath('//section[@id="postingbody"]/text()').extract())
+        compensation = response.xpath('//p[@class="attrgroup"]/span[1]/b/text()').extract_first()
+        employment_type = response.xpath('//p[@class="attrgroup"]/span[2]/b/text()').extract_first()
 
         yield {
             'title': title,
             'location': location,
             'time': time,
-            'description': description
+            'description': description,
+            'compensation': compensation,
+            'employment_type': employment_type
         }
             
